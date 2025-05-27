@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Мой профиль{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card p-4 shadow-sm">
+        <h1 class="mb-3">Мой профиль</h1>
+        <p><strong>Имя:</strong> {{ profile.name }}</p>
+        <p><strong>Фамилия:</strong> {{ profile.surname }}</p>
+        <p><strong>Дата рождения:</strong> {{ profile.birthday }}</p>
+        <p><strong>Адрес:</strong> {{ profile.address }}</p>
+        <p><strong>Телефон:</strong> {{ profile.phone_number }}</p>
+        <p><strong>Telegram ID:</strong> {{ profile.telegram_user_id }}</p>
+        <a href="{% url 'profile_edit' %}" class="btn btn-buy mt-2">Редактировать</a>
+    </div>
+
+    <div class="card p-4 shadow-sm mt-4">
+        <h1 class="mb-3">История заказов</h1>
+        {% if orders %}
+            {% for order in orders %}
+                <div class="order-box p-3 mb-3 border rounded">
+                    <p><strong>Заказ:</strong> {{ order.order_number }}</p>
+                    <p><strong>Сделан:</strong> {{ order.created_at }}</p>
+                    <p><strong>Товары:</strong></p>
+                    <ul class="list-unstyled">
+                        {% for item in order.items.all %}
+                            <li>
+                                <a href="{% url 'product_detail' item.product.id %}" class="text-decoration-none">
+                                    {{ item.product.name }}
+                                </a>
+                                (Размер: {{ item.size }})
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <p><strong>Стоимость:</strong> {{ order.total_price }}</p>
+                    <p><strong>Адрес доставки:</strong> {{ order.receiver_details.address }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">У вас пока нет заказов.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

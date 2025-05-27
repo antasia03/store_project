@@ -1,0 +1,74 @@
+ {% extends "base.html" %}
+
+{% block title %}Каталог товаров{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Добро пожаловать в наш магазин!</h1>
+    <p>Чтобы оформить заказ, выберите товар и положите его в корзину</p>
+    <div class="categories">
+        <a href="{% url 'base' %}" class="category-item">Все категории</a>
+        {% for category in categories %}
+            <a href="?category={{ category.id }}" class="category-item">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+</div>
+<h1 align="center">Каталог товаров</h1>
+{% if products %}
+    <div class="container">
+        <div class="row text-center">
+            {% for product in products %}
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm rounded">
+                    {% if product.images.first %}
+                        <img src="{{ product.images.first.image.url }}" class="card-img-top rounded" alt="{{ product.name }}"
+                             style="object-fit: cover; height: 500px;">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="card-text"><strong>{{ product.price }}</strong></p>
+                        <div class="d-flex flex-column gap-2">
+                            <form method="POST" action="{% url 'toggle_favorite' pk=product.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-favorite w-100">
+                                    {% if product.pk in favorited_products %}
+                                        Удалить из избранного
+                                    {% else %}
+                                        Добавить в избранное
+                                    {% endif %}
+                                </button>
+                            </form>
+                            {% if product.pk not in products_in_cart or not user.is_authenticated %}
+                            <form method="POST" action="{% url 'add_to_cart' pk=product.pk %}" class="d-flex flex-column ">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-buy w-100">
+                                    Добавить в корзину
+                                </button>
+                                <div class="mt-0 p-0">
+                                    <label for="size-{{ product.pk }}" class="form-label d-none"></label>
+                                    <select name="size" id="size-{{ product.pk }}" class="form-select" required>
+                                        <option value="" selected disabled>Выберите размер</option>
+                                        {% for size in sizes %}
+                                            <option value="{{ size.id }}">{{ size.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </form>
+                            {% else %}
+                            <a href="{% url 'cartitem_list' %}" class="btn btn-already-in-cart w-100 py-3">
+                                Ваш товар уже ожидает Вас в корзине
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'product_detail' pk=product.pk %}" class="btn btn-details w-100 mt-1">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

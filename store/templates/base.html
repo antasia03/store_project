@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Магазин{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f2ea;
+            color: #5a4a42;
+        }
+        .navbar {
+            background-color: #e8dcca;
+        }
+        .hero {
+            text-align: center;
+            padding: 50px;
+            background-color: #f4ede5;
+        }
+        .card {
+            height: 100%; /* Чтобы все карточки были одной высоты */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: none;
+            background-color: #fffaf3;
+        }
+
+        .card-body {
+            flex-grow: 1; /* Растягивает тело карточки, чтобы все были одинаковыми */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .btn-buy {
+            background-color: #c9a78c;
+            color: white;
+            min-width: 120px;
+        }
+        .btn-buy:hover {
+            background-color: #a6856e;
+        }
+        .categories {
+            display: flex;  /* Выводим элементы в строку */
+            gap: 15px;  /* Промежуток между категориями */
+            flex-wrap: wrap; /* Разрыв на новую строку, если элементы не помещаются */
+            margin-bottom: 20px; /* Отступ снизу */
+        }
+        .category-item {
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .category-item:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-favorite {
+            background-color: #f4c2c2;
+            color: #5a4a42;
+        }
+
+        .btn-favorite:hover {
+            background-color: #e89b9b;
+            color: white;
+        }
+
+        .btn-buy {
+            background-color: #c9a78c;
+            color: white;
+            min-width: 120px;
+        }
+
+        .btn-buy:hover {
+            background-color: #a6856e;
+        }
+
+        .btn-details {
+            background-color: #e8dcca;
+            color: #5a4a42;
+        }
+
+        .btn-details:hover {
+            background-color: #d6c2b0;
+            color: white;
+        }
+
+        .btn-already-in-cart {
+            background-color: #bbb; /* Серый цвет */
+            color: white;
+        }
+        .btn-already-in-cart:hover {
+            background-color: #999; /* Темнее при наведении */
+        }
+
+
+    </style>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Магазин</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'base' %}">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cartitem_list' %}">Корзина</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'product_favorite_list' %}">Избранное</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Профиль</a></li>
+                        <li class="nav-item">
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn nav-link" >Выйти</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Войти</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Регистрация</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

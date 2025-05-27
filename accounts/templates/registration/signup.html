@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card p-4 shadow-sm" style="max-width: 500px; margin: auto; background-color: #fffaf3; border-radius: 10px;">
+        <div class="card-body text-center">
+            <h2 class="mb-3">Регистрация</h2>
+            <form method="post" class="mt-3">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger small">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-buy w-100">Зарегистрироваться</button>
+            </form>
+            <div class="mt-3">
+                <p>Уже есть аккаунт? <a href="{% url 'login' %}" class="text-decoration-none">Войти</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

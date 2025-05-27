@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Заказ оформлен{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <div class="card p-4 shadow-sm rounded">
+        <h1 class="text-success">Спасибо за заказ!</h1>
+        <p class="lead">Ваш заказ <strong>{{order.order_number}}</strong> успешно оформлен.</p>
+        <p>Мы отправили детали заказа на вашу электронную почту.</p>
+        <p>Доставка будет осуществлена по адресу: <strong>{{order.receiver_details.address}}</strong></p>
+        <p>Наш курьер свяжется с Вами для уточнения даты и время доставки
+            по указанному номеру телефона ({{order.receiver_details.phone_number}})</p>
+
+        <a href="{% url 'base' %}" class="btn btn-primary mt-3">Вернуться в каталог</a>
+    </div>
+</div>
+{% endblock %}

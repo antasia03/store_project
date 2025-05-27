@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Подтверждение заказа{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Подтверждение заказа</h2>
+    <p>Ваши данные для доставки:</p>
+    <ul>
+        <li><strong>Имя:</strong> {{ profile.name }} {{ profile.surname }} </li>
+        <li><strong>Телефон:</strong> {{ profile.phone_number }}</li>
+        <li><strong>Адрес:</strong> {{ profile.address }}</li>
+    </ul>
+
+    <p>Если данные неверные, <a href="{% url 'profile_edit' %}">измените их в профиле</a>.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Оформить заказ</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Избранные товары{% endblock %}
+
+{% block content %}
+<h1 align="center">Избранные товары</h1>
+
+{% if favorite_product %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for favorite in favorite_product %}
+            <div class="col-12 mb-4">  <!-- Одна карточка на всю ширину -->
+                <div class="card p-3 d-flex flex-row align-items-center">
+                    <!-- Картинка слева -->
+                    <img src="{{ favorite.product.images.first.image.url }}"
+                         class="img-fluid"
+                         style="object-fit: cover; height: 200px; width: 200px; border-radius: 10px;">
+
+                    <!-- Описание справа -->
+                    <div class="card-body ms-3">
+                        <h5 class="card-title">{{ favorite.product.name }}</h5>
+                        <p class="card-text">{{ favorite.product.description }}</p>
+                        <p class="card-text"><strong>{{ favorite.product.price }}</strong></p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-buy">Добавить в корзину</button>
+                            <a href="{% url 'product_detail' pk=favorite.product.pk %}" class="btn btn-buy">Подробнее</a>
+                            <form method="POST" action="{% url 'toggle_favorite' pk=favorite.product.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-buy">
+                                        Удалить из избранного
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <p class="text-center">У вас нет избранных товаров.</p>
+{% endif %}
+{% endblock %}

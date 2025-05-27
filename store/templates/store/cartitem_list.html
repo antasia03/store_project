@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Корзина{% endblock %}
+
+{% block content %}
+<h1 align="center">Корзина</h1>
+
+{% if cart %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for cart_item in cart %}
+            <div class="col-12 mb-4">
+                <div class="card p-3 d-flex flex-row align-items-center">
+                    <img src="{{ cart_item.product.images.first.image.url }}"
+                         class="img-fluid"
+                         style="object-fit: cover; height: 200px; width: 200px; border-radius: 10px;">
+
+                    <div class="card-body ms-3">
+                        <h5 class="card-title">{{ cart_item.product.name }}</h5>
+                        <p class="card-text">{{ cart_item.product.description }}</p>
+                        <p class="card-text"><strong>Стоимость: {{ cart_item.product.price }}</strong></p>
+                        <p class="card-text"><strong>Размер: {{cart_item.size}}</strong></p>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'product_detail' pk=cart_item.product.pk %}" class="btn btn-buy">Подробнее</a>
+                            <form method="POST" action="{% url 'remove_from_cart' pk=cart_item.product.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-buy">
+                                        Удалить из корзины
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 text-end">
+                <h4><strong>Итого: {{ total_price }} руб.</strong></h4>
+                <a href="{%url 'order_create'%}" class="btn btn-success mt-2">Оформить заказ</a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <p class="text-center">У вас пока нет товаров в корзине.</p>
+{% endif %}
+{% endblock %}
