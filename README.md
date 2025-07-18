@@ -30,6 +30,7 @@
 ### 1. Клонируйте репозиторий
 
 `git clone https://github.com/antasia03/store_project`
+
 `cd store_project`
 
 
