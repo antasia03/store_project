@@ -39,14 +39,19 @@
 Создайте файл `.env` в корне проекта и заполните его по примеру.  
 Пример содержимого `.env`:
 
-POSTGRES_DB=your_db_name
-POSTGRES_USER=your_db_user
-POSTGRES_PASSWORD=your_db_password
-SECRET_KEY=your_secret_key
-DEBUG=True
-ALLOWED_HOSTS=*
-EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+`POSTGRES_DB=your_db_name`
+
+`POSTGRES_USER=your_db_user`
+
+`POSTGRES_PASSWORD=your_db_password`
+
+`SECRET_KEY=your_secret_key`
+
+`DEBUG=True`
+
+`EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend`
+
+`TELEGRAM_BOT_TOKEN=your_telegram_bot_token`
 
 
 ### 3. Запуск через Docker
@@ -87,12 +92,17 @@ http://localhost:8000/api/
 Для локальной разработки email-уведомления выводятся в консоль.  
 Для реальной отправки писем настройте SMTP в `.env`:
 
-EMAIL_BACKEND = django.core.mail.backends.smtp.EmailBackend
-EMAIL_HOST = smtp.gmail.com
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = your_email@gmail.com
-EMAIL_HOST_PASSWORD = your_password
+`EMAIL_BACKEND = django.core.mail.backends.smtp.EmailBackend`
+
+`EMAIL_HOST = smtp.gmail.com`
+
+`EMAIL_PORT = 587`
+
+`EMAIL_USE_TLS = True`
+
+`EMAIL_HOST_USER = your_email@gmail.com`
+
+`EMAIL_HOST_PASSWORD = your_password`
 
 
 ## Telegram-бот
@@ -100,4 +110,4 @@ EMAIL_HOST_PASSWORD = your_password
 Telegram-бот уведомляет пользователей об изменении статуса заказа.  
 Для работы бота укажите токен в `.env`:
 
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+`TELEGRAM_BOT_TOKEN=your_telegram_bot_token`
