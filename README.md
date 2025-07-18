@@ -29,13 +29,13 @@
 
 ### 1. Клонируйте репозиторий
 
-git clone <ваш_репозиторий>
-cd <название_папки_проекта>
+`git clone https://github.com/antasia03/store_project`
+`cd store_project`
 
 
 ### 2. Настройка окружения
 
-Создайте файл `.env` в корне проекта и заполните его по примеру `.env.example` (если есть).  
+Создайте файл `.env` в корне проекта и заполните его по примеру.  
 Пример содержимого `.env`:
 
 POSTGRES_DB=your_db_name
@@ -50,7 +50,7 @@ TELEGRAM_BOT_TOKEN=your_telegram_bot_token
 
 ### 3. Запуск через Docker
 
-docker-compose up --build
+`docker-compose up --build`
 
 
 После запуска проект будет доступен по адресу:  
@@ -60,7 +60,7 @@ http://localhost:8000/
 
 ### 4. Создание суперпользователя
 
-docker-compose exec web python manage.py createsuperuser
+`docker-compose exec web python manage.py createsuperuser`
 
 
 ## Доступ к панели администратора
